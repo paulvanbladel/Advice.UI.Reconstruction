@@ -1,6 +1,212 @@
 ﻿@page "/aankoopwoning"
-<h3>AankoopWoning</h3>
+@using Advice.UI.Client.ViewModels;
+@using Telerik.FontIcons;
+<div style="float: right;">
+    <TelerikButton ButtonType="ButtonType.Button" OnClick="@(() => DrawerRef.ToggleAsync())">show/hide steps</TelerikButton>
+</div>
 
-@code {
+
+
+<br />
+<TelerikDrawer Data="@Data" Mode="@DrawerMode.Push" Position="DrawerPosition.End"
+@ref="@DrawerRef">
+    <Template>
+        <TelerikStepper Orientation="StepperOrientation.Vertical">
+            <StepperSteps>
+                <StepperStep Label="Financieel plan" />
+                <StepperStep Label="Leen capaciteit" />
+                <StepperStep Label="The magic grid" />
+                <StepperStep Label="Coolblue top 3" />
+                <StepperStep Label="Personalisatie" />
+                <StepperStep Label="Schuld saldo" />
+            </StepperSteps>
+        </TelerikStepper>
+    </Template>
+    <DrawerContent>
+        <h2>Financieel plan</h2>
+        @if (ShowWizard)
+        {
+            <TelerikWizard @bind-Value="@Value" OnFinish="@OnFinishHandler">
+                <WizardSteps>
+
+                    <WizardStep Label="Real Estate">
+                        <Content>
+                            <TelerikForm Model="@RealEstateViewModel" Width="700px">
+                                <FormValidation>
+                                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                                </FormValidation>
+
+                                <FormButtons></FormButtons>
+                            </TelerikForm>
+                        </Content>
+                    </WizardStep>
+
+                    <WizardStep Label="Sales details">
+                        <Content>
+                            <TelerikForm Model="@SalesDetailsViewModel" Width="700px">
+                                <FormValidation>
+                                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                                </FormValidation>
+
+                                <FormButtons></FormButtons>
+                            </TelerikForm>
+                        </Content>
+                    </WizardStep>
+
+                    @foreach (var item in this.VastgoedEigendomsRechtenViewModel)
+                    {
+                        <WizardStep Label="@item.NaamEigenaar">
+                            <Content>
+                                <TelerikForm Model="@item" Width="700px">
+                                    <FormValidation>
+                                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                                    </FormValidation>
+
+                                    <FormButtons></FormButtons>
+                                </TelerikForm>
+                            </Content>
+                        </WizardStep>
+                    }
+
+                    <WizardStep Label="Verbouwingen">
+                        <Content>
+                            <TelerikForm Model="@AndereAankoopKostenViewModel" Width="700px">
+                                <FormValidation>
+                                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                                </FormValidation>
+
+                                <FormButtons></FormButtons>
+                            </TelerikForm>
+                        </Content>
+                    </WizardStep>
+
+                    <WizardStep Label="Verbouwingen">
+                        <Content>
+                            <TelerikForm Model="@VerbouwingsParametersViewModel" Width="700px">
+                                <FormValidation>
+                                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                                </FormValidation>
+
+                                <FormButtons></FormButtons>
+                            </TelerikForm>
+                        </Content>
+                    </WizardStep>
+
+                    <WizardStep Label="Result">
+                        <Content>
+                            <h2>Financial plan completed.</h2>
+                            <TelerikButton OnClick="CalculateResult">Calculate</TelerikButton>
+                            <pre>@AdviseContainerModel</pre>
+                        </Content>
+                    </WizardStep>
+                </WizardSteps>
+            </TelerikWizard>
+        }
+    </DrawerContent>
+</TelerikDrawer>
+@code{
+    //[Inject]
+    //public ILocalStorageService _localStorageService { get; set; }
+
+
+    TelerikDrawer<DrawerItem> DrawerRef { get; set; }
+
+    IEnumerable<DrawerItem> Data { get; set; } =
+        new List<DrawerItem>
+                                        {
+            new DrawerItem { Text = "Counter", Icon = FontIcon.Plus },
+            new DrawerItem { Text = "FetchData", Icon = FontIcon.GridLayout },
+                                        };
+
+    public class DrawerItem
+    {
+        public string Text { get; set; }
+        public FontIcon? Icon { get; set; }
+    }
+
+
+
+    public AdviseContainer AdviseContainerModel { get; set; } = new AdviseContainer();
+
+    public RealEstateViewModel RealEstateViewModel { get; set; } = new RealEstateViewModel();
+    public SalesDetailsViewModel SalesDetailsViewModel { get; set; } = new SalesDetailsViewModel();
+
+    public VerbouwingsParametersViewModel VerbouwingsParametersViewModel { get; set; } = new VerbouwingsParametersViewModel();
+
+    public AndereAankoopKostenViewModel AndereAankoopKostenViewModel { get; set; } = new AndereAankoopKostenViewModel();
+    public List<VastgoedEigendomsRechtViewModel> VastgoedEigendomsRechtenViewModel { get; set; } = new List<VastgoedEigendomsRechtViewModel>();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //await _localStorageService.SetItemAsync<string>("name", "John Smith");
+        //if (await _localStorageService.ContainKeyAsync("abc"))
+        //{
+        //    AdviseContainerModel = await _localStorageService.GetItemAsync<AdviseContainer>("abc");
+        //}
+        //else
+        //{
+            AdviseContainerModel = new AdviseContainer();
+        //}
+
+
+
+
+        if (VastgoedEigendomsRechtenViewModel == null)
+        {
+            VastgoedEigendomsRechtenViewModel = GetDefaultVastgoedEigendomsRechtenFromCrmContainer(AdviseContainerModel);
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    private List<VastgoedEigendomsRechtViewModel> GetDefaultVastgoedEigendomsRechtenFromCrmContainer(AdviseContainer adviseContainerModel)
+    {
+        double defaultEigendomsPercentage = 1 / adviseContainerModel.CrmCustomers.Count;
+        var vastgoedEigendomsRechten = new List<VastgoedEigendomsRechtViewModel>();
+        foreach (var crmCustomer in adviseContainerModel.CrmCustomers)
+        {
+            var vastgoedEigendomsRecht = new VastgoedEigendomsRechtViewModel
+                {
+                    NaamEigenaar = crmCustomer.CustomerDisplayValue,
+                    EigendomsPercentage = defaultEigendomsPercentage,
+                    //MeeneembaarRegistratieRechtenBedrag = 0,
+                    //OnroerendGoedGebruikType = OnroerendGoedGebruikType.EnigeWoning,
+                    IsEigenWoning = true
+                };
+            vastgoedEigendomsRechten.Add(vastgoedEigendomsRecht);
+        }
+        return vastgoedEigendomsRechten;
+    }
+
+    public async void CalculateResult()
+    {
+        AdviseContainerModel.ProjectSpecificationViewModel = new ProjectSpecificationViewModel
+            {
+                AndereAankoopKostenViewModel = this.AndereAankoopKostenViewModel,
+                RealEstateViewModel = this.RealEstateViewModel,
+                SalesDetailsViewModel = this.SalesDetailsViewModel,
+                VastgoedEigendomsRechtViewModels = this.VastgoedEigendomsRechtenViewModel
+            };
+
+        //await _localStorageService.SetItemAsync("abc", this.AdviseContainerModel);
+    }
+
+    async Task OnFinishHandler()
+    {
+        ShowWizard = false;
+
+        await Dialog.AlertAsync("The Registration was submitted successfully", "Done");
+    }
+
+
+    [CascadingParameter]
+    public DialogFactory Dialog { get; set; }
+
+    public bool ShowWizard { get; set; } = true;
+
+    public int Value { get; set; }
 
 }
