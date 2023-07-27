@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvestmentAnalysis.Core.Domain;
+using System.Text.Json.Serialization;
 
 namespace Advice.UI.Client.ViewModels;
 
@@ -13,8 +14,8 @@ public record class RealEstateViewModel
     //TODO upgrade to real postnummer picker that uses the real postnummer json file
     //public Gemeente Gemeente { get; set; }
     public double KadastraalInkomen { get; set; }
-    //public WoningTypeVoorRegistratieRechten WoningTypeVoorRegistratieRechten { get; set; }
-    //public OnroerendGoedType OnroerendGoedType { get; set; }
+    public WoningTypeVoorRegistratieRechten WoningTypeVoorRegistratieRechten { get; set; }
+    public OnroerendGoedType OnroerendGoedType { get; set; }
 
 
 }
