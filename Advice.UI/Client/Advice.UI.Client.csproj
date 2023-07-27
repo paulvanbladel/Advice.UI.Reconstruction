@@ -1,0 +1,18 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+	  <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
+    <PackageReference Include="Telerik.UI.for.Blazor" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Advice.UI.Shared.csproj" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties UseCdnSupport="False" /></VisualStudio></ProjectExtensions>
+</Project>
