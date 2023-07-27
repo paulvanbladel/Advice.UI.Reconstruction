@@ -7,7 +7,7 @@ public record class RealEstateViewModel
 {
 
     public string Straat { get; set; }
-    public string HuisNummer { get; set; }
+    //public string HuisNummer { get; set; }
     public string Bus { get; set; }
     public string PostNummer { get; set; }
 

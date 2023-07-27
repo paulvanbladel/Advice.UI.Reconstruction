@@ -15,7 +15,7 @@
   
   
   <ItemGroup>
-    <ProjectReference Include="C:\Users\paulv\source\repos\TelerikBlazorAppWithLocalStorage\InvestmentAnalysis.Core\InvestmentAnalysis.Core.csproj" />
+    <ProjectReference Include="..\InvestmentAnalysis.Core\InvestmentAnalysis.Core.csproj" />
   </ItemGroup>
 
     <ItemGroup>
