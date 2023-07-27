@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Advice.UI.Shared
 {
@@ -11,5 +12,11 @@ namespace Advice.UI.Shared
         public string Summary { get; set; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+    public class MenuItem
+    {
+        public string Text { get; set; }
+        public string Url { get; set; }
+        public List<MenuItem> Items { get; set; }
     }
 }

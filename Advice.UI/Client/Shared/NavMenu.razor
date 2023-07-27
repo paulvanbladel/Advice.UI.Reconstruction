@@ -1,37 +1,89 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Advice.UI</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿@using Advice.UI.Shared
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+<style>
+    /*
+                Styles normally go in a .css file.
+                This is just a simple example to get you started.
+                Feel free to relocate this to site.css if you wish.
+            */
+    .k-nav.k-state-active {
+        font-weight: bold;
+    }
+
+    .on-top {
+        /* prevents notfications from blocking navigation */
+        z-index: 10001;
+    }
+</style>
+
+<TelerikMenu Data="@MenuItems" Class="on-top">
+
+    <ItemTemplate Context="item">
+        @{
+            <NavLink href="@item.Url"
+                     target="@(IsInternalPage(item.Url) ? "" : "_blank")"
+                     class="k-nav k-link"
+                     ActiveClass="k-state-active"
+                     Match="@(item.Url == "" ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                @item.Text
             </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+        }
+    </ItemTemplate>
+</TelerikMenu>
+
+<CultureChooser />
 
 @code {
-    bool collapseNavMenu = true;
+    List<MenuItem> MenuItems { get; set; }
 
-    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    MenuItem SelectedMenuItem { get; set; }
 
-    void ToggleNavMenu()
+    bool IsInternalPage(string url)
     {
-        collapseNavMenu = !collapseNavMenu;
+        if (url == null) return false;
+
+        var protocols = new string[] { "//", "http://", "https://" };
+        return !protocols.Any(p => url.StartsWith(p.ToLower()));
+    }
+
+    protected override void OnInitialized()
+    {
+        MenuItems = new List<MenuItem>()
+    {
+            new MenuItem()
+            {
+                Text = "Home",
+                Url = "",
+            },
+
+            new MenuItem()
+            {
+                Text = "Scenario Selection",
+
+                Items = new List<MenuItem>()
+                {
+                    new MenuItem()
+                    {
+                        Text = "Aankoop Woning",
+                        Url = "aankoopwoning"
+                    },
+                    new MenuItem()
+                    {
+                        Text = "Aankoop Grond",
+                        Url = "Scenario2"
+                    },
+                    new MenuItem()
+                    {
+                        Text = "Bouw woning",
+                        Url = "Scenario2"
+                    },
+                    new MenuItem()
+                    {
+                        Text = "You name it :)",
+                        Url = "Scenario2"
+                    },
+                }
+            }
+        };
     }
 }

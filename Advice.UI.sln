@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Advice.UI.Server", "Advice.UI\Server\Advice.UI.Server.csproj", "{D0550C5C-3039-4374-82D3-F082D70B0033}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advice.UI.Server", "Advice.UI\Server\Advice.UI.Server.csproj", "{D0550C5C-3039-4374-82D3-F082D70B0033}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Advice.UI.Client", "Advice.UI\Client\Advice.UI.Client.csproj", "{38B6DFFA-89E0-42EF-AA8B-520A7CF86063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advice.UI.Client", "Advice.UI\Client\Advice.UI.Client.csproj", "{38B6DFFA-89E0-42EF-AA8B-520A7CF86063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Advice.UI.Shared", "Advice.UI\Shared\Advice.UI.Shared.csproj", "{81D09358-B3E9-4B27-A7A3-10315969C8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advice.UI.Shared", "Advice.UI\Shared\Advice.UI.Shared.csproj", "{81D09358-B3E9-4B27-A7A3-10315969C8A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
