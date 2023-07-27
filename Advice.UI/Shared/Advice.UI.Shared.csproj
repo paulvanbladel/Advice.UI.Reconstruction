@@ -15,7 +15,7 @@
   
   
   <ItemGroup>
-    <ProjectReference Include="..\InvestmentAnalysis.Core\InvestmentAnalysis.Core.csproj" />
+    <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
   </ItemGroup>
 
     <ItemGroup>

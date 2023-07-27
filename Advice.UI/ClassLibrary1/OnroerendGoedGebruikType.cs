@@ -1,4 +1,4 @@
-﻿namespace InvestmentAnalysis.Core.Domain;
+﻿namespace ClassLibrary1;
 public enum OnroerendGoedGebruikType
 {
     EnigeWoning = 1,

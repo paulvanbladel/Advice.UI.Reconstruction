@@ -1,5 +1,5 @@
 ﻿
-using InvestmentAnalysis.Core.Domain;
+using ClassLibrary1;
 using System;
 
 namespace Advice.UI.Client.ViewModels;

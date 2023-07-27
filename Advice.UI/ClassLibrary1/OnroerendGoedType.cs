@@ -1,14 +1,14 @@
-﻿namespace InvestmentAnalysis.Core.Domain;
+﻿namespace ClassLibrary1;
 
 //TODO constructor
 // voor grond, vastzetten op grond
 // voor bestaande woning en nieuwbouw, te kiezen
 public enum OnroerendGoedType
 {
-    Appartement=1 ,
-    StudioOfFlat =2,
-    HorecaPand =3,
-    DrieGevelWoning =4,
+    Appartement = 1,
+    StudioOfFlat = 2,
+    HorecaPand = 3,
+    DrieGevelWoning = 4,
     //Bouwgrond,
     //AnderPand,
     //BelEtage,

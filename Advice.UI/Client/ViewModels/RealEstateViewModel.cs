@@ -1,4 +1,4 @@
-﻿using InvestmentAnalysis.Core.Domain;
+﻿using ClassLibrary1;
 using System.Text.Json.Serialization;
 
 namespace Advice.UI.Client.ViewModels;
@@ -7,7 +7,7 @@ public record class RealEstateViewModel
 {
 
     public string Straat { get; set; }
-    //public string HuisNummer { get; set; }
+    public string HuisNummer { get; set; }
     public string Bus { get; set; }
     public string PostNummer { get; set; }
 
